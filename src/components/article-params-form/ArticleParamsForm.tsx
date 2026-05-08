@@ -6,13 +6,11 @@ import { Button } from 'src/ui/button';
 import { Select } from 'src/ui/select';
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
+import { Text } from 'src/ui/text';
 
 // Types and constants
-import type { OptionType } from 'src/constants/articleProps';
 import type { ArticleStateType } from 'src/constants/articleProps';
-import { backgroundColors, contentWidthArr, defaultArticleState, fontColors } from 'src/constants/articleProps';
-import { fontFamilyOptions } from 'src/constants/articleProps';
-import { fontSizeOptions } from 'src/constants/articleProps';
+import { backgroundColors, contentWidthArr, defaultArticleState, fontColors, fontFamilyOptions, fontSizeOptions } from 'src/constants/articleProps';
 
 // Styles
 import styles from './ArticleParamsForm.module.scss';
@@ -58,7 +56,6 @@ export const ArticleParamsForm = ({onChangeState}: ArticleParamsFormProps) => {
 	}
 
 	const handleReset = (e: React.FormEvent): void => {
-		e.preventDefault();
 		setFormState(defaultArticleState);
 		onChangeState(defaultArticleState);
 	}
@@ -72,6 +69,11 @@ export const ArticleParamsForm = ({onChangeState}: ArticleParamsFormProps) => {
 					onSubmit={handleSubmit}
 					onReset={handleReset}
 					>
+
+					<Text as='h2' size={31} weight={800} uppercase>
+						Задайте параметры
+					</Text>
+
 					<Select
 						selected={formState.fontFamilyOption}
 						options={fontFamilyOptions}
