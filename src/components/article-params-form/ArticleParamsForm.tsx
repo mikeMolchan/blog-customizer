@@ -18,7 +18,11 @@ import { fontSizeOptions } from 'src/constants/articleProps';
 import styles from './ArticleParamsForm.module.scss';
 import clsx from 'clsx';
 
-export const ArticleParamsForm = () => {
+type ArticleParamsFormProps = {
+	onChangeState: (state: ArticleStateType) => void;
+}
+
+export const ArticleParamsForm = ({onChangeState}: ArticleParamsFormProps) => {
 	// close/open with button
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -45,14 +49,29 @@ export const ArticleParamsForm = () => {
 		}
 	}, [isOpen]);
 
-	// local form data
+	// data flow
 	const [formState, setFormState] = useState(defaultArticleState);
+
+	const handleSubmit = (e: React.FormEvent): void => {
+		e.preventDefault();
+		onChangeState(formState);
+	}
+
+	const handleReset = (e: React.FormEvent): void => {
+		e.preventDefault();
+		setFormState(defaultArticleState);
+		onChangeState(defaultArticleState);
+	}
 
 	return (
 		<div ref={sidebarRef}>
 			<ArrowButton isOpen={isOpen} onClick={toggleOpen} />
 			<aside className={clsx(styles.container, { [styles.container_open]: isOpen })}>
-				<form className={styles.form}>
+				<form
+					className={styles.form}
+					onSubmit={handleSubmit}
+					onReset={handleReset}
+					>
 					<Select
 						selected={formState.fontFamilyOption}
 						options={fontFamilyOptions}
